@@ -58,11 +58,12 @@ const difficultyLabels = {
   advanced: 'Avanzado'
 }
 
+const supabase = createClient()
+
 export default function AdminCoursesPage() {
   const { user } = useAuthStore()
   const { toast } = useToast()
   const router = useRouter()
-  const supabase = createClient()
   
   const [courses, setCourses] = useState<Course[]>([])
   const [loading, setLoading] = useState(true)
@@ -99,7 +100,8 @@ export default function AdminCoursesPage() {
     } finally {
       setLoading(false)
     }
-  }, [user?.id, supabase, toast])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id])
 
   useEffect(() => {
     fetchCourses()

@@ -64,10 +64,11 @@ const difficultyLabels = {
   advanced: 'Avanzado'
 }
 
+const supabase = createClient()
+
 export default function CourseEditPage({ params }: { params: { courseId: string } }) {
   const { toast } = useToast()
   const router = useRouter()
-  const supabase = createClient()
   
   const [course, setCourse] = useState<Course | null>(null)
   const [modules, setModules] = useState<Module[]>([])
@@ -114,7 +115,8 @@ export default function CourseEditPage({ params }: { params: { courseId: string 
     } finally {
       setLoading(false)
     }
-  }, [params.courseId, supabase, toast])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.courseId])
 
   useEffect(() => {
     fetchCourseData()

@@ -47,10 +47,11 @@ interface Course {
   title: string
 }
 
+const supabase = createClient()
+
 export default function StudentsPage() {
   const { user } = useAuthStore()
   const { toast } = useToast()
-  const supabase = createClient()
   
   const [students, setStudents] = useState<Student[]>([])
   const [courses, setCourses] = useState<Course[]>([])
@@ -189,7 +190,8 @@ export default function StudentsPage() {
     } finally {
       setLoading(false)
     }
-  }, [user?.id, supabase, toast])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id])
 
   useEffect(() => {
     fetchData()

@@ -50,10 +50,11 @@ interface AnalyticsData {
   }[]
 }
 
+const supabase = createClient()
+
 export default function AnalyticsPage() {
   const { user } = useAuthStore()
   const { toast } = useToast()
-  const supabase = createClient()
   
   const [analytics, setAnalytics] = useState<AnalyticsData>({
     totalCourses: 0,
@@ -182,7 +183,8 @@ export default function AnalyticsPage() {
     } finally {
       setLoading(false)
     }
-  }, [user?.id, supabase, toast])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id])
 
   useEffect(() => {
     fetchAnalytics()
